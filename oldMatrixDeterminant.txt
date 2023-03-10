@@ -1,0 +1,60 @@
+// double[][] newMatrix = new double[matrix.length][matrix[0].length * 2];
+        // for (int y = 0; y < matrix.length; y++) {
+        //     for (int i = 0; i < 2; i++) {
+        //         for (int x = 0; x < matrix.length; x++) {
+        //             newMatrix[y][i * matrix.length + x] = matrix[y][x];
+        //         }
+        //     }
+        // }
+        // int addition = 0;
+        // int subtraction = 0;
+        // int multiplyAddition = 1;
+        // int multiplySubtraction = 1;
+
+        // for (int i = 0; i < 3; i++) {
+        //     for (int j = 0; j < matrix.length; j++) {
+        //         multiplyAddition *= newMatrix[j][i + j];
+        //         multiplySubtraction *= newMatrix[newMatrix.length - 1 - j][i + j];
+        //     }
+        //     addition += multiplyAddition;
+        //     System.out.println("Addition: " + addition);
+        //     subtraction += multiplySubtraction;
+        //     System.out.println("Subtraction: " + subtraction);
+        //     multiplySubtraction = 1;
+        //     multiplyAddition = 1;
+        // }
+        // for (double[] row : newMatrix) {
+        //     System.out.println(Arrays.toString(row));
+        // }
+        // return addition - subtraction;
+
+        if (matrix.length < 3) {
+            if (matrix.length == 1) {
+                return matrix[0][0];
+            } else {
+                return matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1];
+            }
+        } else {
+            double answer = 0;
+            double coeffient = 0;
+            for (int i = 0; i < matrix.length; i++) {
+                int locationOfX = 0;
+                int locationOfY = 0;
+                double[][] newMatrix = new double[matrix.length - 1][matrix.length - 1];
+                for (int x = 0; x < matrix.length; x++) {
+                    coeffient = matrix[0][x];
+                    System.out.println(matrix[0][x]);
+                    if (i != x) {
+                        for (int y = 1; y < matrix[i].length; y++) {
+                            newMatrix[locationOfY][locationOfX] = matrix[y][x];  
+                            locationOfY++;
+                        }
+                        locationOfY = 0;
+                        locationOfX++;
+                    }
+                    
+                }
+                answer += coeffient * getDeterminant(newMatrix);
+            }
+            return answer;
+        }
